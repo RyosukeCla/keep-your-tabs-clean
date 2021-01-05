@@ -188,7 +188,7 @@ async function main() {
       const isStick = stickTabs.has(currentTabId);
       chrome.contextMenus.update(contextMenuId, 
       {
-        title: `${isStick ? '✓ ' : ''}Preserve This Page - LRU Tab Closer`,
+        title: `${isStick ? '✓ ' : ''}Preserve This Tab - KeepYourTabsClean`,
       });
     } catch(e) {
       console.error(e);
