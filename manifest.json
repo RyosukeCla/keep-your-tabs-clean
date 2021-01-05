@@ -1,6 +1,6 @@
 {
-  "name": "LRU Tab Closer",
-  "description": "Least Recently Used Tab Close Extension",
+  "name": "KeepYourTabsClean",
+  "description": "Keep your chrome tabs clean.",
   "permissions": [
     "storage",
     "tabs",

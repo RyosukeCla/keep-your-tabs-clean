@@ -2,14 +2,65 @@
 <html>
 <head><title>LRU Tab Closer Options</title></head>
 <body>
-<label>
-  Max Tabs
-  <input type="number" id="max-tabs-option">
-</label>
+  <div class="Setting_Wrap">
+    <div>
+      Closing oldest tabs, when
+    </div>
+    <div class="Indent">
+      <label>
+        the number of tabs exceeds 
+        <input type="number" id="max-tabs-option">
+        tabs
+      </label>
+      <div class="Indent">and</div>
+      <label>
+        <input type="number" id="expired-after-option">
+        minites after these are no longer used.
+      </label>
+    </div>
+    <div>But, audible tabs will not be closed.</div>
+    <button id="save">Save</button>
+    <div id="status"></div>
+  </div>
+  <style>
+    div, input, button {
+      font-size: 16px;
+      line-height: 26px;
+      color: rgba(0,16,14,0.8);
+    }
 
-<div id="status"></div>
-<button id="save">Save</button>
+    .Setting_Wrap {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .Indent {
+      margin-left: 16px;
+    }
 
-<script src="options.js"></script>
+    input[type="number"] {
+      border-radius: 4px;
+      border: 1px solid rgb(117, 117, 117);
+      width: 50px;
+    }
+
+    button {
+      margin-top: 16px;
+      border-radius: 4px;
+      border: none;
+      background: rgba(0,16,14,0.06);
+      height: 32px;
+      line-height: 30px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    button:hover {
+      background: rgba(0,16,14,0.2);
+    }
+
+  </style>
+  <script src="options.js"></script>
 </body>
 </html>

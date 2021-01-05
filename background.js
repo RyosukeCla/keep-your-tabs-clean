@@ -41,6 +41,39 @@ class LRUSet {
   }
 }
 
+class ExpiredSet {
+  constructor(expire) {
+    this.expire = expire;
+    this.map = new Map();
+    this.map.keys()
+  }
+
+  /**
+   * @param {string} key 
+   */
+  set(key) {
+    this.map.set(key, Date.now());
+  }
+
+  /**
+   * @returns {string[]}
+   */
+  getExpired() {
+    const entries = Array.from(this.map.entries());
+    const expired = entries.filter(([key, timestamp]) => {
+      return timestamp < Date.now() - this.expire;
+    });
+    return expired.map(([key, value]) => key);
+  }
+
+  deleteExpired() {
+    const keys = this.getExpired();
+    keys.forEach(key => {
+      this.map.delete(key);
+    });
+  }
+}
+
 async function existsTab(tabId) {
   return new Promise(resolve => {
     chrome.tabs.get(tabId, (tab) => {
@@ -77,6 +110,16 @@ async function getMaxTabs() {
   });
 }
 
+async function getExpiredAfter() {
+  return new Promise(resolve => {
+    chrome.storage.sync.get({
+      expiredAfter: 15,
+    }, function(items) {
+      return resolve(parseInt(items.expiredAfter));
+    });
+  });
+}
+
 function removeTab(tabId, n = 5) {
   if (n <= 0) return;
   chrome.tabs.remove(tabId, () =>{
@@ -89,8 +132,11 @@ function removeTab(tabId, n = 5) {
 
 async function main() {
   const maxTabs = await getMaxTabs();
+  const expiredAfter = await getExpiredAfter();
   console.log('max tabs', maxTabs);
+  console.log('expired minites after', expiredAfter);
   const lruTabs = new LRUSet(maxTabs);
+  const expiredTabs = new ExpiredSet(expiredAfter * 60 * 1000); // expiredAfter minites
   const stickTabs = new Set();
   const contextMenuId = 'lru-tab-closer-context-menu-id';
 
@@ -103,8 +149,8 @@ async function main() {
       return;
     }
     lruTabs.set(tabId, (willDeleteTabId) => {
-      console.log('will remove', willDeleteTabId);
-      removeTab(willDeleteTabId);
+      console.log('will remove', willDeleteTabId, 'after', expiredAfter, 'minites');
+      expiredTabs.set(willDeleteTabId);
     });
   }
 
@@ -175,6 +221,16 @@ async function main() {
     onDelete(tabId);
     updateContextMenu();
   });
+
+  setInterval(() => {
+    console.log('loop for closing expired tabs')
+    const tabs = expiredTabs.getExpired();
+    expiredTabs.deleteExpired();
+    tabs.forEach(tabId => {
+      console.log('remove', tabId, 'since expired');
+      removeTab(tabId);
+    });
+  }, 10 * 1000);
 }
 
 main().catch(e => {
