@@ -199,7 +199,7 @@ async function main() {
     await new Promise(resolve => chrome.contextMenus.remove(contextMenuId, resolve));
     chrome.contextMenus.create({
       id: contextMenuId,
-      title: "Preserve This Page - LRU Tab Closer",
+      title: "Preserve This Tab - KeepYourTabsClean",
       contexts: ["page", "page_action"],  // ContextType
       visible: true,
       onclick: onClickStick // A callback function
