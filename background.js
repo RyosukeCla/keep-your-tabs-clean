@@ -72,6 +72,10 @@ class ExpiredSet {
       this.map.delete(key);
     });
   }
+
+  delete(key) {
+    this.map.delete(key);
+  }
 }
 
 async function existsTab(tabId) {
@@ -145,7 +149,8 @@ async function main() {
     const canRemove = await canTabRemove(tabId);
     const isStick = stickTabs.has(tabId);
     if (!exists || isStick || !canRemove) {
-      lruTabs.delete(tabId)
+      lruTabs.delete(tabId);
+      expiredTabs.delete(tabId);
       return;
     }
     lruTabs.set(tabId, (willDeleteTabId) => {
@@ -157,6 +162,7 @@ async function main() {
   const onDelete = (tabId) => {
     lruTabs.delete(tabId);
     stickTabs.delete(tabId);
+    expiredTabs.delete(tabId);
   }
 
   const onClickStick = async () => {
