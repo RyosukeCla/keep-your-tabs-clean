@@ -11,7 +11,7 @@ This exnteions closes most unused expired tabs automatically, so your tabs are k
 Clone this repo.
 
 ```
-$ git clone https://github.com/RyosukeCla/lru-tab-closer-extension.git
+$ git clone https://github.com/RyosukeCla/keep-your-tabs-clean.git
 ```
 
 Click `Load unpack` button on [this page](chrome://extensions/), and select the folder you cloned.
