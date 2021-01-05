@@ -1,6 +1,6 @@
 {
   "name": "KeepYourTabsClean",
-  "description": "Keep your chrome tabs clean.",
+  "description": "Keep your chrome tabs clean by closing most unused annoying tabs automatically.",
   "permissions": [
     "storage",
     "tabs",
