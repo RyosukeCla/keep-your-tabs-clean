@@ -14,4 +14,4 @@ Clone this repo.
 $ git clone https://github.com/RyosukeCla/keep-your-tabs-clean.git
 ```
 
-And click `Load unpack` button on chrome://extensions/, then select the folder you cloned.
+And click `Load unpack` button on `chrome://extensions/`, then select the folder you cloned.
