@@ -1,0 +1,25 @@
+{
+  "name": "LRU Tab Closer",
+  "description": "Least Recently Used Tab Close Extension",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "contextMenus"
+  ],
+  "version": "1.0.0",
+  "version_name": "1.0.0",
+  "manifest_version": 2,
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "web_accessible_resources": [
+  ]
+}
